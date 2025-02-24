@@ -1,4 +1,6 @@
-from django.http import HttpResponse
+from django.urls import path
+from .views import index
 
-def index(request):
-    return HttpResponse("Hello World! This came from the index view")
+urlpatterns = [
+    path('', index, name='index')
+]
