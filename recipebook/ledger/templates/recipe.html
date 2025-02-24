@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Recipe {{ num }}</title>
+    <title>{{ name }}</title>
 </head>
 <body>
+    <h1> {{ name }}</h1>
     <ul>
-        {% for recipe in recipes %}
-            <li>{{ recipe }}</li>
+        {% for ingredient in ingredients %}
+            <li>{{ ingredient.name }} x {{ ingredient.quantity}}</li>
         {% endfor %}
     </ul>
 </body>

@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 
 # Create your views here.
-def recipes(request):
+def recipe_list(request):
     ctx = {
         "recipes": [
             {
@@ -133,7 +133,7 @@ def recipe(request, num=1):
         ],
         "link": "/recipe/2"
     }
-    return render(request, "recipe.html", ctx, {"num": num})
+    return render(request, "recipe.html", ctx, {"num":num})
     
 
 
