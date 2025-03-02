@@ -9,7 +9,7 @@ class Recipe(models.Model):
     name = models.CharField(max_length=255)
 
 class RecipeIngredient(models.Model):
-    Quantity = models.BigIntegerField() # not sure
+    Quantity = models.CharField(max_length=10) # not sure
     Ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     Recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
