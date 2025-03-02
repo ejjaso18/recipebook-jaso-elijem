@@ -133,6 +133,10 @@ def recipe(request, num=1):
             "link": "/recipe/2"
         }
     return render(request, "recipe.html", ctx)
+
+def ingredientsInDatabase(request):
+    items = Ingredient.objects.all()
+    return render(request, 'recipe_list.html', {'recipes': items})
     
 
 
