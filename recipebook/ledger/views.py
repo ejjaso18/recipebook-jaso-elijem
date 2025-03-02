@@ -136,7 +136,9 @@ def recipe(request, num=1):
 
 def ingredientsInDatabase(request):
     items = Ingredient.objects.all()
-    return render(request, 'recipe_list.html', {'recipes': items})
+    return render(request, 'recipe.html', {'ingredients': items})
     
-
+def recipesInDatabase(request):
+    items = Recipe.objects.all()
+    return render(request, 'recipe_list.html', {'recipes': items})
 
