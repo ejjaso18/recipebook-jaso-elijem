@@ -135,10 +135,10 @@ def recipe(request, num=1):
     return render(request, "recipe.html", ctx)
 
 def ingredientsInDatabase(request):
-    items = Ingredient.objects.all()
-    return render(request, 'recipe.html', {'ingredients': items})
+    ingredients = Ingredient.objects.all()
+    return render(request, 'recipe.html', {'ingredients': ingredients})
     
 def recipesInDatabase(request):
-    items = Recipe.objects.all()
-    return render(request, 'recipe_list.html', {'recipes': items})
+    recipes = Recipe.objects.all()
+    return render(request, 'recipe_list.html', {'recipes': recipes})
 
