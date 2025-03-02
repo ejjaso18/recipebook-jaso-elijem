@@ -10,7 +10,7 @@ class Recipe(models.Model):
 
 class RecipeIngredient(models.Model):
     Quantity = models.BigIntegerField() # not sure
-    Ingredient = models.ForeignKey(Ingredient)
-    Recipe = models.ForeignKey(Recipe)
+    Ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    Recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
 
