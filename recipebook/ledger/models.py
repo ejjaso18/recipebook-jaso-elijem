@@ -9,8 +9,8 @@ class Recipe(models.Model):
     name = models.CharField(max_length=255)
 
 class RecipeIngredient(models.Model):
-    Quantity = models.DecimalField(max_length=10) 
-    Ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    Recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    quantity = models.DecimalField(max_length=10) 
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
 
