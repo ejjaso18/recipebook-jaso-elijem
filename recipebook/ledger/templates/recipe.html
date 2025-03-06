@@ -5,10 +5,10 @@
 </head>
 <body>
     <h1>Recipe Book</h1>
-    <h2>{{ name }}</h2>
+    <h2>{{ recipe.name }}</h2>
     <ul>
         {% for ingredient in recipe.ingredients.all %}
-            <li>{{ ingredient.ingredient.name }} x {{ ingredient.quantity}}</li>
+            <li>{{ ingredient.quantity }} x {{ ingredient.ingredient.name }}</li>
         {% endfor %}
     </ul>
 </body>
