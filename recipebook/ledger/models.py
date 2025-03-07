@@ -32,5 +32,8 @@ class RecipeIngredient(models.Model):
         on_delete=models.CASCADE,
         related_name='ingredients')
     
+    def __str__(self):
+        return '{} of {} in {}'.format(self.ingredient.name, self.quantity, self.recipe.name)
+    
 
 
