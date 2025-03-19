@@ -1,7 +1,15 @@
 from django.contrib import admin
-from .models import Ingredient, Recipe, RecipeIngredient
+from django.contrib.auth.admin import UserAdmin
+from .models import Ingredient, Recipe, RecipeIngredient, Profile
 
 # Register your models here.
+
+class ProfileInline(admin.StackedInline):
+    model = Profile
+    can_delete = False
+
+class UserAdmin(UserAdmin):
+    inlines = [ProfileInline,]
 
 class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredient
