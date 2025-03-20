@@ -1,22 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<header>
-    <form method="POST" action="{% url 'logout' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Logout</button>
-    </form>
-</header>
-<head>
-    <title>{{ name }}</title>
-</head>
-<body>
-    <h1>Recipe Book</h1>
+{% extends 'base.html' %}
+
+
+{% block content%}
     <h2>{{ recipe.name }}</h2>
     <ul>
         {% for ingredient in recipe.ingredients.all %}
             <li>{{ ingredient.quantity }} x {{ ingredient.ingredient.name }}</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+    <footer>
+        <a href = "{% url 'ledger:recipe_list' %}"> Return to Recipe List</a>
+    </footer>
+{% endblock%}

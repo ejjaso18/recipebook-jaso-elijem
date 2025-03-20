@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<header>
-    <form method="POST" action="{% url 'logout' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Logout</button>
-    </form>
-</header>
-<head>
-    <title>Recipe List</title>
-</head>
-<body>
-    <h1>Recipe Book</h1>
+{% extends 'base.html' %}
+
+{% block title %}Recipe List{% endblock %}
+{% block content %}
+    <h2>Recipe List</h2>
     <ul>
         {% for recipe in object_list %}
             <li>
@@ -21,5 +12,4 @@
             </li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}
