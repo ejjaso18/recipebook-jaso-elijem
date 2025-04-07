@@ -52,12 +52,9 @@ class RecipeImage(models.Model):
         Recipe, 
         on_delete=models.CASCADE, 
         related_name='images')
-
-    def __str__(self):
-        return self.name
     
     def get_absolute_url(self):
-        return reverse('recipe', args=[self.pk])
+        return reverse('image', args=[self.pk])
     
 
 
