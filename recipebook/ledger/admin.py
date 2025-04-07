@@ -13,12 +13,15 @@ class UserAdmin(UserAdmin):
 class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredient
 
+class RecipeImageInline(admin.TabularInline):
+    model = RecipeImage
+
 class IngredientAdmin(admin.ModelAdmin):
     model = Ingredient
 
 class RecipeAdmin(admin.ModelAdmin):
     model = Recipe
-    inlines = [RecipeIngredientInline]
+    inlines = [RecipeIngredientInline, RecipeImageInline]
     search_fields = ('name', )
     ('Details', {
         'ingredients':
