@@ -9,15 +9,15 @@ class RecipeForm(forms.ModelForm):
 class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
-        fields = '__all__'
+        fields = ['name']
 
 class RecipeIngredientForm(forms.ModelForm):
     class Meta:
         model = RecipeIngredient
-        fields = '__all__'
+        fields = ['ingredient', 'quantity', 'recipe']
 
 class RecipeImageForm(forms.ModelForm):
     class Meta:
-        model = Ingredient
+        model = RecipeImage
         fields = ['image','description']
         
