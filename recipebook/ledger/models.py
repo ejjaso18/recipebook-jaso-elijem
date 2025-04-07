@@ -45,6 +45,20 @@ class RecipeIngredient(models.Model):
     def __str__(self):
         return '{} of {} in {}'.format(self.ingredient.name, self.quantity, self.recipe.name)
     
+class RecipeImage(models.Model):
+    image = models.ImageField(upload_to='recipe_image/', null=False)
+    description = models.CharField(max_length=255)
+    recipe = models.ForeignKey(
+        Recipe, 
+        on_delete=models.CASCADE, 
+        related_name='images')
+
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse('recipe', args=[self.pk])
+    
 
 
 
