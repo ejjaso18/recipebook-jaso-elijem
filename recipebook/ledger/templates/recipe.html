@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content%}
     <h2>{{ recipe.name }}</h2>
@@ -11,6 +12,12 @@
             <li>{{ ingredient.quantity }} x {{ ingredient.ingredient.name }}</li>
         {% endfor %}
     </ul>
+    <a href = "{% url 'ledger:recipe_add_image' recipe.pk %}"> Add an Image</a>
+    {% if recipe.images.all %}
+        {% for image in recipe.images.all %}
+            <img src="{{ image.image.url }}" alt="{{ image.decription }}">
+        {% endfor %}
+    {% endif %}
     <footer>
         <a href = "{% url 'ledger:recipe_list' %}"> Return to Recipe List</a>
     </footer>

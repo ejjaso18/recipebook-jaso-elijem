@@ -2,8 +2,6 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-# Create your models here.
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
@@ -46,6 +44,17 @@ class RecipeIngredient(models.Model):
     
     def __str__(self):
         return '{} of {} in {}'.format(self.ingredient.name, self.quantity, self.recipe.name)
+    
+class RecipeImage(models.Model):
+    image = models.ImageField(upload_to='recipe_image/', null=False)
+    description = models.CharField(max_length=255)
+    recipe = models.ForeignKey(
+        Recipe, 
+        on_delete=models.CASCADE, 
+        related_name='images')
+    
+    def get_absolute_url(self):
+        return reverse('image', args=[self.pk])
     
 
 
