@@ -1,9 +1,10 @@
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 
 from . import models, forms
-from .models import Recipe
+from .models import Recipe, RecipeImage
 from .forms import RecipeForm, IngredientForm, RecipeIngredientForm, RecipeImageForm
 
 class RecipeListView(LoginRequiredMixin, ListView):
@@ -17,7 +18,7 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
 class RecipeCreateView(LoginRequiredMixin, CreateView):
     template_name = 'recipe_create.html'
     
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         return render(request, self.template_name, {
             'recipe_form': RecipeForm(),
             'ingredient_form': IngredientForm(),
@@ -67,7 +68,40 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
             'ingredient_form': ingredient_form,
             'recipe_ingredient_form': recipe_ingredient_form,
         })
+    
+class RecipeImageAddView(LoginRequiredMixin, CreateView):
+    model = RecipeImage
+    template_name = "recipe_add_image.html"
 
+    def get(self, request, pk):
+        recipe = get_object_or_404(models.Recipe, pk=pk)
+        return render(request, self.template_name, 
+                      {"recipe_add_image_form": RecipeImageForm(),
+                       "recipe": recipe
+                       })
+    
+    def post(self, request, pk):
+        print(request.POST)
+        recipe = get_object_or_404(models.Recipe, pk=pk)
+        add_image_form = RecipeImageForm(request.POST, request.FILES)
+        # print(request.POST)
+        if add_image_form.is_valid():
+            # print("gradd")        
+            image = add_image_form.save(commit=False)
+            image.recipe = recipe
+            image.save()
+            return redirect('ledger:recipe', pk=pk)
+        return render(request, self.template_name, {
+            "recipe_add_image_form": add_image_form,
+            "recipe": recipe
+        })
+    
+    def get_success_url(self):
+        return reverse_lazy(
+            'ledger:recipe_detail',
+            kwargs={'pk': self.kwargs['pk']}
+        )
+            
         
 
 

@@ -12,9 +12,10 @@
             <li>{{ ingredient.quantity }} x {{ ingredient.ingredient.name }}</li>
         {% endfor %}
     </ul>
+    <a href = "{% url 'ledger:recipe_add_image' recipe.pk %}"> Add an Image</a>
     {% if recipe.images.all %}
         {% for image in recipe.images.all %}
-            <img src="{{ image.image.url }}" alt="{{ image.decription}}">
+            <img src="{{ image.image.url }}" alt="{{ image.decription }}">
         {% endfor %}
     {% endif %}
     <footer>
