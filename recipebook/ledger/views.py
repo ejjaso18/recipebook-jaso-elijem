@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 
-from . import models, forms
+from . import models
 from .models import Recipe, RecipeImage
 from .forms import RecipeForm, IngredientForm, RecipeIngredientForm, RecipeImageForm
 
@@ -84,9 +84,7 @@ class RecipeImageAddView(LoginRequiredMixin, CreateView):
         print(request.POST)
         recipe = get_object_or_404(models.Recipe, pk=pk)
         add_image_form = RecipeImageForm(request.POST, request.FILES)
-        # print(request.POST)
         if add_image_form.is_valid():
-            # print("gradd")        
             image = add_image_form.save(commit=False)
             image.recipe = recipe
             image.save()
