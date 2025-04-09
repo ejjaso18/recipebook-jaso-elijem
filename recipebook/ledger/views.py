@@ -1,7 +1,6 @@
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect, render
 
 from . import models, forms
 from .models import Recipe
@@ -16,22 +15,58 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
     template_name = 'recipe.html'
     
 class RecipeCreateView(LoginRequiredMixin, CreateView):
-    model = Recipe
-    form_class = RecipeForm
     template_name = 'recipe_create.html'
-    success_url = reverse_lazy('ledger:recipe_create')
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['recipe_form'] = RecipeForm()
-        context['ingredient_form'] = IngredientForm()
-        context['recipe_ingredient_form'] = RecipeIngredientForm()
-        return context
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {
+            'recipe_form': RecipeForm(),
+            'ingredient_form': IngredientForm(),
+            'recipe_ingredient_form': RecipeIngredientForm(),
+        })
     
-    def form_valid(self, form):
-        profile = get_object_or_404(models.Profile, user=self.request.user)
-        form.instance.author = profile
-        return super().form_valid(form)
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+        if 'recipe' in request.POST:
+            print("recipe saved")
+            recipe_form = RecipeForm(request.POST)
+            if recipe_form.is_valid():
+                recipe = recipe_form.save(commit=False)
+                profile = get_object_or_404(models.Profile, user=request.user)
+                recipe.author = profile
+                recipe.save()
+                print("POST data:", request.POST)
+                recipe_ingredient_form = RecipeIngredientForm(initial={'recipe': recipe})
+                ingredient_form = IngredientForm()
+                return redirect('ledger:recipe_create')
+            else:
+                ingredient_form = IngredientForm()
+                recipe_ingredient_form = RecipeIngredientForm()
+        if 'ingredient' in request.POST:
+            print("ingredient saved")
+            ingredient_form = IngredientForm(request.POST)
+            if ingredient_form.is_valid():
+                ingredient_form.save()
+                print("POST data:", request.POST)
+                return redirect('ledger:recipe_create')
+            else:
+                recipe_form = RecipeForm()
+                recipe_ingredient_form = RecipeIngredientForm()
+        if 'recipe_ingredient' in request.POST:
+            print("recipe ingredient saved")
+            recipe_ingredient_form = RecipeIngredientForm(request.POST)
+            if recipe_ingredient_form.is_valid():
+                recipe_ingredient_form.save()
+                print("POST data:", request.POST)
+                return redirect('ledger:recipe_create')
+            else:
+                recipe_form = RecipeForm()
+                ingredient_form = IngredientForm()
+
+        return render(request, self.template_name, {
+            'recipe_form': recipe_form,
+            'ingredient_form': ingredient_form,
+            'recipe_ingredient_form': recipe_ingredient_form,
+        })
 
         
 
